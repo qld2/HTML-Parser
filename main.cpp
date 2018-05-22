@@ -7,7 +7,7 @@ using namespace std;
 
 string findAttribute(string line) {
     unsigned long separator = line.find("~");
-    return line.substr(separator);
+    return line.substr(separator + 1);
 }
 
 string findTag(string line) {
@@ -75,7 +75,9 @@ int main() {
     vector<string> lines(numOfQueries);
     vector<string> queries(numOfQueries);
 
+    cout << endl << findTag("tag1.tag2~name") << endl;
 
+    /*
     for (int i = 0; i < numOfLines; i++) {
         string in, temp;
 
@@ -88,11 +90,10 @@ int main() {
         cout << in << endl;
         lines[i] = in;
     }
-    /*
+
     for (unsigned long i = numOfLines; i < numOfLines + numOfQueries; i++) {
         cin >> queries[i];
     }
-
 
     for (int i = 0; i < numOfQueries; i++) {
         string attribute = findAttribute(queries[i]);
