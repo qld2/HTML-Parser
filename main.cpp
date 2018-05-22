@@ -15,7 +15,7 @@ string findTag(string line) {
     return line.substr(0, separator);
 }
 
-int findLineNumber(vector<string> lines, string input, int lineStart){
+unsigned int findLineNumber(vector<string> lines, string input, int lineStart){
     unsigned long firstPeriod = input.find(".");
     unsigned long squiggly = input.find("~");
     string name, otherTags;
@@ -24,13 +24,13 @@ int findLineNumber(vector<string> lines, string input, int lineStart){
         name = input.substr(1, squiggly);
     } else {
         name = input.substr(1, firstPeriod);
-        otherTags = input.substr(firstPeriod,squiggly);
+        otherTags = input.substr(firstPeriod + 1, squiggly);
     }
 
     for (int i = lineStart; i < lines.size() / 2; i++) {
         if (firstPeriod == -1) {
             if (lines[i].find(name) != -1) {
-                return i;
+                return (unsigned) i;
             }
         } else {
             if (lines[i].find(name) != -1) {
@@ -38,12 +38,7 @@ int findLineNumber(vector<string> lines, string input, int lineStart){
             }
         }
     }
-
-
-
 }
-
-
 
 string findAttributeValue(string line, string attribute) {
     unsigned long startingIndex = line.find(attribute);
@@ -72,43 +67,43 @@ int main() {
     unsigned long numOfLines, numOfQueries;
     cin >> numOfLines >> numOfQueries;
 
-    vector<string> lines(numOfQueries);
+    vector<string> lines(numOfLines);
     vector<string> queries(numOfQueries);
 
-    cout << endl << findTag("tag1.tag2~name") << endl;
-
-    /*
     for (int i = 0; i < numOfLines; i++) {
         string in, temp;
-
         cin >> temp;
 
-        while (temp != "\n") {
+        while (temp[temp.length() - 1] != '>') {
             in += temp;
+            in += " ";
+            cin >> temp;
         }
-
-        cout << in << endl;
+        in += temp;
         lines[i] = in;
     }
 
-    for (unsigned long i = numOfLines; i < numOfLines + numOfQueries; i++) {
+    for (unsigned long i = 0; i < numOfQueries; i++) {
         cin >> queries[i];
     }
+
 
     for (int i = 0; i < numOfQueries; i++) {
         string attribute = findAttribute(queries[i]);
         string tag = findTag(queries[i]);
 
+        cout << attribute << " " << tag << endl;
+
         int lineNum = findLineNumber(lines, tag, 0);
 
-        string attributeValue = findAttributeValue(queries[lineNum], attribute);
-        cout << attributeValue <<endl;
+        //string attributeValue = findAttributeValue(queries[lineNum], attribute);
+        cout << lineNum <<endl;
     }
 
     for (int i = 0; i < numOfQueries; i++) {
         cout << queries[i] <<endl;
     }
-    */
+
 
     return 0;
 }
