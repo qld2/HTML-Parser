@@ -21,9 +21,9 @@ unsigned int findLineNumber(vector<string> lines, string input, int lineStart){
     string name, otherTags;
 
     if (firstPeriod == -1) {
-        name = input.substr(1, squiggly);
+        name = input.substr(0, squiggly);
     } else {
-        name = input.substr(1, firstPeriod);
+        name = input.substr(0, firstPeriod);
         otherTags = input.substr(firstPeriod + 1, squiggly);
     }
 
@@ -60,10 +60,13 @@ string findAttributeValue(string line, string attribute) {
         }
     }
 
-    return line.substr(start, end);
+    if (end == 0) return "Not Found!";
+
+    return line.substr(start, end - start);
 }
 
 int main() {
+
     unsigned long numOfLines, numOfQueries;
     cin >> numOfLines >> numOfQueries;
 
@@ -92,18 +95,11 @@ int main() {
         string attribute = findAttribute(queries[i]);
         string tag = findTag(queries[i]);
 
-        cout << attribute << " " << tag << endl;
-
         int lineNum = findLineNumber(lines, tag, 0);
 
-        //string attributeValue = findAttributeValue(queries[lineNum], attribute);
-        cout << lineNum <<endl;
+        string attributeValue = findAttributeValue(lines[lineNum], attribute);
+        cout << attributeValue <<endl;
     }
-
-    for (int i = 0; i < numOfQueries; i++) {
-        cout << queries[i] <<endl;
-    }
-
 
     return 0;
 }
